@@ -26,26 +26,29 @@ public class Main {
                 case 3:
                     remove(scanner, productsList);
                     break;
+                case 4:
+                    find(scanner, productsList);
+                    break;
             }
         }
     }
 
     public static int getOperation(Scanner scanner) {
-        System.out.println("Выберите операцию (1 - добавить; 2 - показать; 3 - удалить; 0 - выход):");
+        System.out.println("Выберите операцию (1 - добавить; 2 - показать; 3 - удалить; 4 - найти; 0 - выход):");
 
         String input = scanner.nextLine();
         int operation = 0;
 
         try {
             operation = Integer.parseInt(input);
+
+            if (operation < 0 || operation > 4) {
+                System.out.println("Не верный номер операции!");
+                operation = -1;
+            }
         }
         catch (NumberFormatException ex) {
             System.out.println("Нужно ввести число!");
-            operation = -1;
-        }
-
-        if (operation < 0 || operation > 3) {
-            System.out.println("Не верный номер операции!");
             operation = -1;
         }
 
@@ -85,5 +88,20 @@ public class Main {
 
         System.out.println("Покупка \"" + product + "\" удалена, список покупок:");
         show(productList);
+    }
+
+    public static void find(Scanner scanner, ArrayList<String> productList) {
+        System.out.println("Введите текст для поиска:");
+        String inputLower = scanner.nextLine().toLowerCase();
+
+        System.out.println("Найдено:");
+
+        for (int i = 0; i < productList.size(); i++) {
+            String productLower = productList.get(i).toLowerCase();
+
+            if (productLower.contains(inputLower)) {
+                System.out.println((i + 1) + ". " + productLower);
+            }
+        }
     }
 }
